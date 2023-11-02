@@ -18,9 +18,32 @@ const sampleDataForPhotoListItem = {
 };
 
 
+const sampleDataForPhotoListItemTwo = {
+  id: "2",
+  location: {
+    city: "Montreal",
+    country: "Canada",
+  },
+  imageSource: `${process.env.PUBLIC_URL}/Image-1-Regular.jpeg`,
+  username: "Joe Example",
+  profile: `${process.env.PUBLIC_URL}/profile-1.jpg`,
+};
+
+const sampleDataForPhotoListItemThree = {
+  id: "3",
+  location: {
+    city: "Montreal",
+    country: "Canada",
+  },
+  imageSource: `${process.env.PUBLIC_URL}/Image-1-Regular.jpeg`,
+  username: "Joe Example",
+  profile: `${process.env.PUBLIC_URL}/profile-1.jpg`,
+};
+
+
 const App = () => {
 
-  const photoArray = [sampleDataForPhotoListItem, sampleDataForPhotoListItem, sampleDataForPhotoListItem];
+  const photoArray = [sampleDataForPhotoListItem, sampleDataForPhotoListItemTwo, sampleDataForPhotoListItemThree];
 
 
   return (
