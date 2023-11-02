@@ -1,21 +1,34 @@
 import React from "react";
 
 import "../styles/PhotoListItem.scss";
+import PhotoFavButton from "./PhotoFavButton";
 
 
-const sampleDataForPhotoListItem = {
-  id: "1",
-  location: {
-    city: "Montreal",
-    country: "Canada",
-  },
-  imageSource: `${process.env.PUBLIC_URL}/Image-1-Regular.jpeg`,
-  username: "Joe Example",
-  profile: `${process.env.PUBLIC_URL}/profile-1.jpg`,
+
+const PhotoListItem = (props) => {
+  return (
+    <article className="photo-list__item">
+      <PhotoFavButton className="photo-list__fav-icon"/>
+      <img src={props.imageSource}
+        alt="User's Image"
+        className="photo-list__image"
+      />
+
+      <span className="photo-list__user-details">
+
+        <span className="photo-list__user-info">
+          <img src={props.profile} alt="Profile" className="photo-list__user-profile" />
+
+          <p className="photo-list__username">{props.username}</p>
+          
+          <p className="photo-list__user-location">
+            {props.location.city}, {props.location.country}
+          </p>
+        </span>
+      </span>
+    </article>
+  );
 };
 
-const PhotoListItem = () => {
-  /* Insert React */
-};
 
 export default PhotoListItem;
