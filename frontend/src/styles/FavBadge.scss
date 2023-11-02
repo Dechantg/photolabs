@@ -1,5 +1,12 @@
 .fav-badge {
   position: relative;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  svg {
+    fill: red;
+  }
 }
 
 .fav-badge__count { 

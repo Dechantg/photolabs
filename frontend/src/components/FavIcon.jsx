@@ -1,4 +1,6 @@
 import React from 'react';
+import '../styles/FavBadge.scss';
+
 
 const FavIcon = ({ displayAlert, selected, onClick }) => {
   const handleIconClick = () => {
@@ -10,13 +12,8 @@ const FavIcon = ({ displayAlert, selected, onClick }) => {
   return (
     <button
       onClick={handleIconClick}
-      className="fav-icon-button"
-      style={{
-        background: 'none',
-        border: 'none',
-        padding: 0,
-        cursor: 'pointer',
-      }}
+      className="fav-badge"
+      
     >
 
 
