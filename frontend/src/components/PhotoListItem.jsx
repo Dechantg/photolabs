@@ -4,31 +4,39 @@ import "../styles/PhotoListItem.scss";
 import PhotoFavButton from "./PhotoFavButton";
 
 
+const PhotoListItem = ({
+  id,
+  urls,
+  user,
+  location,
+  onClick,
+}) => {
+  const handleArticleClick = () => {
+    if (onClick) {
+      onClick({ id, urls, user, location });
+      console.log("Article clicked with id:", id);
+    }
+  };
 
-const PhotoListItem = (props) => {
   return (
-    <article className="photo-list__item">
-      <PhotoFavButton itemId={props.id} />
-      <img src={props.imageSource}
+    <div  onClick={handleArticleClick}>
+      <img
+        src={urls.regular}
         alt="User's Image"
         className="photo-list__image"
       />
-
       <span className="photo-list__user-details">
-
         <span className="photo-list__user-info">
-          <img src={props.profile} alt="Profile" className="photo-list__user-profile" />
-
-          <p className="photo-list__username">{props.username}</p>
-          
+          <img src={user.profile} alt="Profile" className="photo-list__user-profile" />
+          <p className="photo-list__username">{user.username}</p>
+          <p className="photo-list__username">{user.name}</p>
           <p className="photo-list__user-location">
-            {props.location.city}, {props.location.country}
+            {location.city}, {location.country}
           </p>
         </span>
       </span>
-    </article>
+    </div>
   );
 };
-
 
 export default PhotoListItem;

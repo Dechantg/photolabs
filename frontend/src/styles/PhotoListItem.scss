@@ -46,3 +46,8 @@
 .photo-list__user-location {
   color: #838383;
 }
+
+.photo-list__clickable-container:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}

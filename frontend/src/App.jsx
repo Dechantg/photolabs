@@ -1,57 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import PhotoListItem from './components/PhotoListItem';
+import HomeRoute from 'routes/HomeRoute';
+import photos from 'mocks/photos';
+import topics from 'mocks/topics';
+import PhotoDetailsModal from 'routes/PhotoDetailsModal';
 
-import './App.scss';
 
 // Note: Rendering a single component to build components in isolation
 
-const sampleDataForPhotoListItem = {
-  id: "1",
-  location: {
-    city: "Montreal",
-    country: "Canada",
-  },
-  imageSource: `${process.env.PUBLIC_URL}/Image-1-Regular.jpeg`,
-  username: "Joe Example",
-  profile: `${process.env.PUBLIC_URL}/profile-1.jpg`,
-};
-
-
-const sampleDataForPhotoListItemTwo = {
-  id: "2",
-  location: {
-    city: "Montreal",
-    country: "Canada",
-  },
-  imageSource: `${process.env.PUBLIC_URL}/Image-1-Regular.jpeg`,
-  username: "Joe Example",
-  profile: `${process.env.PUBLIC_URL}/profile-1.jpg`,
-};
-
-const sampleDataForPhotoListItemThree = {
-  id: "3",
-  location: {
-    city: "Montreal",
-    country: "Canada",
-  },
-  imageSource: `${process.env.PUBLIC_URL}/Image-1-Regular.jpeg`,
-  username: "Joe Example",
-  profile: `${process.env.PUBLIC_URL}/profile-1.jpg`,
-};
-
+{/* <PhotoDetailsModal /> */ }
 
 const App = () => {
+  const [modalData, setModalData] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const photoArray = [sampleDataForPhotoListItem, sampleDataForPhotoListItemTwo, sampleDataForPhotoListItemThree];
+  const modalClick = (data) => {
+    console.log("app showing off modal data", data);
+    setModalData(data);
+    setIsModalOpen(true);
+  };
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div>
 
-      {photoArray.map((photoData) => (
-        <PhotoListItem key={photoData.id} {...photoData} />
-      ))}
+      <HomeRoute photos={photos} topics={topics} clickForModal={modalClick} />
+      {isModalOpen && <PhotoDetailsModal photos={photos} modalData={modalData} onModalClose={closeModal} />}
 
     </div>
   );

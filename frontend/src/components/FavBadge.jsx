@@ -3,12 +3,12 @@ import FavIcon from './FavIcon';
 
 import '../styles/FavBadge.scss';
 
-const FavBadge = ({ isFavPhotoExist }) => {
+const FavBadge = ({ liked }) => {
   return (
-    <div className='fav-badge'>
-      <FavIcon displayAlert={!!isFavPhotoExist}/>
+    <div className="fav-badge">
+      <FavIcon selected={liked} />
     </div>
-  ) 
+  );
 };
 
 export default FavBadge;
