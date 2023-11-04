@@ -13,6 +13,8 @@ import PhotoDetailsModal from 'routes/PhotoDetailsModal';
 const App = () => {
   const [modalData, setModalData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [likeDataModal, setLikeDataModal] = useState(null);
+
 
   const modalClick = (data) => {
     console.log("app showing off modal data", data);
@@ -24,11 +26,20 @@ const App = () => {
     setIsModalOpen(false);
   };
 
+  const handleLikeStatusChange = (itemId, isLiked) => {
+    console.log('we are looking here this time Received id from PhotoDetailsModal:', itemId);
+    setLikeDataModal({ itemId, isLiked });
+
+    // Handle the like status change in your parent component
+    // You can update your state or perform any other necessary actions here
+  };
+
   return (
     <div>
 
-      <HomeRoute photos={photos} topics={topics} clickForModal={modalClick} />
-      {isModalOpen && <PhotoDetailsModal photos={photos} modalData={modalData} onModalClose={closeModal} />}
+      <HomeRoute photos={photos} topics={topics} clickForModal={modalClick} likeDataModal={likeDataModal}/>
+
+      {isModalOpen && <PhotoDetailsModal photos={photos} modalData={modalData} onModalClose={closeModal} onLikeStatusChange={handleLikeStatusChange}/>}
 
     </div>
   );

@@ -8,14 +8,16 @@ const PhotoFavButton = ({ itemId, onLikeStatusChange }) => {
   const [isLiked, setIsLiked] = useState(false);
 
   const handleClick = () => {
-    if (!isLiked) {
+    const updatedIsLiked = !isLiked;
+  
+    if (!updatedIsLiked) {
       console.log("Button state changed from normal to liked");
     } else {
       console.log("Button state changed from liked to normal");
     }
-
-    setIsLiked((prevIsLiked) => !prevIsLiked);
-    onLikeStatusChange(itemId, !isLiked);
+  
+    setIsLiked(updatedIsLiked);
+    onLikeStatusChange(itemId, updatedIsLiked);
   };
 
   return (

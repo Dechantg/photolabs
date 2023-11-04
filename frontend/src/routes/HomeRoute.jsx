@@ -5,9 +5,13 @@ import TopNavigation from '../components/TopNavigationBar';
 
 import '../styles/HomeRoute.scss';
 
-const HomeRoute = ({ photos, topics, clickForModal }) => {
+const HomeRoute = ({ photos, topics, clickForModal, likeDataModal }) => {
   const [likeResults, setLikeResults] = useState({});
   const [isLiked, setIsLiked] = useState(false);
+  // const [likeDataModalState, setLikeDataModalState] = useState(null);
+
+
+  // console.log("Here is some data being passed down from app from modal", likeDataModal);
 
   const handleArticleClick = (data) => {
     clickForModal(data);
@@ -15,11 +19,32 @@ const HomeRoute = ({ photos, topics, clickForModal }) => {
   };
 
   useEffect(() => {
+
     setIsLiked(Object.values(likeResults).some((liked) => liked === true));
   }, [likeResults]);
 
+  useEffect(() => {
+    if (likeDataModal) {
+      let processedData;
+      if (likeDataModal.itemId && likeDataModal.isLiked) {
+        processedData = {
+          itemId: likeDataModal.itemId,
+          isLiked: likeDataModal.isLiked,
+        };
+      } else if (likeDataModal.itemId && likeDataModal.itemId.itemId) {
+        processedData = {
+          itemId: likeDataModal.itemId.itemId,
+          isLiked: likeDataModal.itemId.isLiked,
+        };
+      }
+    
+      likeData(processedData);
+    }
+  }, [likeDataModal]);
+
+
   const likeData = (data) => {
-    console.log("Like data received in HomeRoute:", data); // Add this log statement
+    console.log("Like data received in HomeRoute AND UPDATED:", data); // Add this log statement
 
     setLikeResults((prevLikeResults) => ({
       ...prevLikeResults,

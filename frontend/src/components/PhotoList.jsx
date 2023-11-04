@@ -5,6 +5,9 @@ import PhotoListItem from "./PhotoListItem";
 import PhotoFavButton from "./PhotoFavButton";
 
 const PhotoList = ({ photos, likeStatus, onClick }) => {
+
+  console.log("here is the photos object from photolist", photos);
+  
   const handleLikeStatusChange = (itemId, isLiked) => {
     const likeStatusData = { itemId, isLiked, photos };
     likeStatus(likeStatusData);
