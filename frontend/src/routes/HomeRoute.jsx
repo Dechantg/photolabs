@@ -5,10 +5,16 @@ import TopNavigation from '../components/TopNavigationBar';
 
 import '../styles/HomeRoute.scss';
 
-const HomeRoute = ({ photos, topics, clickForModal, likeDataModal }) => {
+const HomeRoute = ({ photos, topics, clickForModal, likeDataModal, onTopicSelect }) => {
   const [likeResults, setLikeResults] = useState({});
   const [isLiked, setIsLiked] = useState(false);
   // const [likeDataModalState, setLikeDataModalState] = useState(null);
+
+  const handleTopicSelection = (topicData) => {
+    // Do something with the selected topic data
+    console.log("Selected topic:", topicData);
+    onTopicSelect(topicData);
+  };
 
 
   // console.log("Here is some data being passed down from app from modal", likeDataModal);
@@ -54,7 +60,7 @@ const HomeRoute = ({ photos, topics, clickForModal, likeDataModal }) => {
 
   return (
     <div className="home-route">
-      <TopNavigation topics={topics} isLiked={isLiked} />
+      <TopNavigation topics={topics} isLiked={isLiked} onTopicSelect={handleTopicSelection} />
       <PhotoList photos={photos} likeStatus={likeData} onClick={handleArticleClick} />
     </div>
   );
