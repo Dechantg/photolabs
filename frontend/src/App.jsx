@@ -1,8 +1,14 @@
 import React from 'react';
 import useApplicationData from 'hooks/useApplicationData';
-
+// import photos from "mocks/photos";
 import HomeRoute from 'routes/HomeRoute';
 import PhotoDetailsModal from 'routes/PhotoDetailsModal';
+
+const Log = ({ data }) => {
+  console.log("here is the data log from the begining of the app.jsx: ",data); // Log the data
+  return null; // Render nothing (null) in the actual DOM
+};
+
 
 const App = () => {
 
@@ -18,8 +24,10 @@ const App = () => {
     topics,
   } = useApplicationData();
 
-  
- 
+  console.log('isModalOpen:', isModalOpen);
+
+
+
   return (
     <div>
       <HomeRoute
@@ -30,14 +38,8 @@ const App = () => {
         onTopicSelect={handleTopicSelect}
       />
 
-      {isModalOpen && (
-        <PhotoDetailsModal
-          photos={photos}
-          modalData={modalData}
-          onModalClose={closeModal}
-          onLikeStatusChange={handleLikeStatusChange}
-        />
-      )}
+
+      {isModalOpen && <PhotoDetailsModal photos={photos} modalData={modalData} onModalClose={closeModal} onLikeStatusChange={handleLikeStatusChange}/>}
     </div>
   );
 };

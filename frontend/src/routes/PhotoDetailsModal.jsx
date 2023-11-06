@@ -15,17 +15,18 @@ const PhotoDetailsModal = ({ photos, modalData, onModalClose, onLikeStatusChange
 
   };
 
-  const similarPhotos = photos.find(photo => photo.id === modalData.id)?.similarPhotos;
-  console.log('Similar Photos:', similarPhotos);
+  console.log(photos);
 
-  const filteredSimilarPhotos = Object.values(similarPhotos)
-    .filter(photo => photo.id !== modalData.id)
-    .map(filteredPhoto => ({
-      id: filteredPhoto.id,
-      location: filteredPhoto.location,
-      urls: filteredPhoto.urls,
-      user: filteredPhoto.user,
-    }));
+  const similarPhotos = photos.find(item => item.id === modalData.id)?.similar_photos;
+  console.log('Similar Photos:', similarPhotos);
+  
+  const filteredSimilarPhotos = (similarPhotos || []).filter(filteredPhoto => filteredPhoto.id !== modalData.id).map(filteredPhoto => ({
+    id: filteredPhoto.id,
+    location: filteredPhoto.location,
+    urls: filteredPhoto.urls,
+    user: filteredPhoto.user,
+  }));
+
   console.log('Filtered Similar Photos:', filteredSimilarPhotos);
 
 
@@ -80,7 +81,7 @@ const PhotoDetailsModal = ({ photos, modalData, onModalClose, onLikeStatusChange
         <div>
           <span >
             <li className='photo-details-modal__images'>
-            Similar Photos:
+              Similar Photos:
 
 
               <PhotoList photos={filteredSimilarPhotos} likeStatus={handleLikeStatusChange} />
