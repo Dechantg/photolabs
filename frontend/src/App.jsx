@@ -2,11 +2,10 @@ import React from 'react';
 import useApplicationData from 'hooks/useApplicationData';
 
 import HomeRoute from 'routes/HomeRoute';
-import photos from 'mocks/photos';
-import topics from 'mocks/topics';
 import PhotoDetailsModal from 'routes/PhotoDetailsModal';
 
 const App = () => {
+
   const {
     modalData,
     isModalOpen,
@@ -15,8 +14,12 @@ const App = () => {
     closeModal,
     handleLikeStatusChange,
     handleTopicSelect,
-  } = useApplicationData(); // Use the custom hook here
+    photos,
+    topics,
+  } = useApplicationData();
 
+  
+ 
   return (
     <div>
       <HomeRoute

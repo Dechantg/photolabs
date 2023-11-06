@@ -1,9 +1,12 @@
-import { useReducer } from 'react';
+import { useReducer, useEffect } from 'react';
 
 const initialState = {
   modalData: null,
   isModalOpen: false,
   likeDataModal: null,
+  photos: [],
+  topics: [],
+  selectedTopicId: null,
 };
 
 const reducer = (state, action) => {
@@ -16,12 +19,21 @@ const reducer = (state, action) => {
     return { ...state, isModalOpen: false };
   case 'SET_LIKE_DATA':
     return { ...state, likeDataModal: action.payload };
+  case 'SET_PHOTOS':
+    return { ...state, photos: action.payload };
+  case 'SET_TOPICS':
+    return { ...state, topics: action.payload };
+  case 'GET_PHOTOS_BY_TOPICS':
+    return { ...state, topics: action.payload };
+  case 'SET_SELECTED_TOPIC_ID':
+    return { ...state, selectedTopicId: action.payload };
+    
   default:
     return state;
   }
 };
 
-const useApplicationData = function() {
+const useApplicationData = function(selectedTopicId) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const modalClick = (data) => {
@@ -38,8 +50,41 @@ const useApplicationData = function() {
   };
 
   const handleTopicSelect = (selectedTopic) => {
+    dispatch({ type: 'SET_SELECTED_TOPIC_ID', payload: selectedTopic.id });
     console.log("Topic selected in App:", selectedTopic);
   };
+
+  useEffect(() => {
+    const photosURL = state.selectedTopicId
+      ? `http://localhost:8001/api/topics/photos/${state.selectedTopicId}`
+      : 'http://localhost:8001/api/photos';
+
+    fetch(photosURL)
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch({ type: 'SET_PHOTOS', payload: data });
+        console.log("Fetched photos data:", data);
+      })
+      .catch((error) => {
+        console.error("Error fetching photos:", error);
+      });
+  }, [state.selectedTopicId]);
+
+
+  useEffect(() => {
+    fetch('http://localhost:8001/api/topics')
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch({ type: 'SET_TOPICS', payload: data });
+        console.log("Fetched topics data:", data);
+      })
+      .catch((error) => {
+        console.error("Error fetching topics data:", error);
+      });
+  }, []);
+
+
+
 
   return {
     ...state,
@@ -51,3 +96,4 @@ const useApplicationData = function() {
 };
 
 export default useApplicationData;
+
