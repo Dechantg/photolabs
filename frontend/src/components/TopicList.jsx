@@ -4,17 +4,17 @@ import "../styles/TopicList.scss";
 import TopicListItem from "./TopicListItem";
 
 
-const TopicList = ({topics, onItemClick}) => {
+const TopicList = (props) => {
 
   const handleItemClick = (topicData) => {
     // Pass the clicked topic data up to the parent component
-    onItemClick(topicData);
+    props.onItemClick(topicData);
   };
 
 
   return (
     <div className="top-nav-bar__topic-list">
-      {topics.map((topicData) => (
+      {props.topics.map((topicData) => (
         // Wrap the TopicListItem with a clickable element
         <div key={topicData.id} onClick={() => handleItemClick(topicData)}>
           <TopicListItem {...topicData} />

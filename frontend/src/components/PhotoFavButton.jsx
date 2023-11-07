@@ -4,7 +4,7 @@ import FavIcon from './FavIcon';
 import '../styles/PhotoFavButton.scss';
 
 
-const PhotoFavButton = ({ itemId, onLikeStatusChange }) => {
+const PhotoFavButton = (props) => {
   const [isLiked, setIsLiked] = useState(false);
 
   const handleClick = () => {
@@ -17,7 +17,7 @@ const PhotoFavButton = ({ itemId, onLikeStatusChange }) => {
     }
   
     setIsLiked(updatedIsLiked);
-    onLikeStatusChange(itemId, updatedIsLiked);
+    props.onLikeStatusChange(props.itemId, updatedIsLiked);
   };
 
   return (

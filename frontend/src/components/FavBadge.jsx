@@ -4,10 +4,10 @@ import FavIcon from './FavIcon';
 import '../styles/FavBadge.scss';
 
 // pass favIcon
-const FavBadge = ({ liked }) => {
+const FavBadge = (props) => {
   return (
     <div className="fav-badge">
-      <FavIcon selected={liked} />
+      <FavIcon selected={props.liked} />
     </div>
   );
 };

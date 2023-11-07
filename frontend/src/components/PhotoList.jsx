@@ -4,17 +4,19 @@ import "../styles/PhotoList.scss";
 import PhotoListItem from "./PhotoListItem";
 import PhotoFavButton from "./PhotoFavButton";
 
-const PhotoList = ({ photos, likeStatus, onClick }) => {
+// { photos, likeStatus, onClick }
+
+const PhotoList = (props) => {
 
   
   const handleLikeStatusChange = (itemId, isLiked) => {
-    const likeStatusData = { itemId, isLiked, photos };
-    likeStatus(likeStatusData);
+    const likeStatusData = { itemId, isLiked, photos: props.photos };
+    props.likeStatus(likeStatusData);
   };
 
   return (
     <ul className="photo-list">
-      {photos.map((photoData) => (
+      {props.photos.map((photoData) => (
         <li key={photoData.id} className="photo-list__item">
           <PhotoFavButton
             itemId={photoData.id}
@@ -23,8 +25,8 @@ const PhotoList = ({ photos, likeStatus, onClick }) => {
           <PhotoListItem
             {...photoData}
             onClick={(data) => {
-              if (onClick) {
-                onClick(data);
+              if (props.onClick) {
+                props.onClick(data);
               }
             }}
           />

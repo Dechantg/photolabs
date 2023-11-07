@@ -5,19 +5,20 @@ import useHomeRouteHook from '../hooks/homeRouteHook';
 
 import '../styles/HomeRoute.scss';
 
+//{ photos, topics, clickForModal, likeDataModal, onTopicSelect }
 
-const HomeRoute = ({ photos, topics, clickForModal, likeDataModal, onTopicSelect }) => {
+const HomeRoute = (props) => {
   const {
     isLiked,
     likeData,
     handleTopicSelection,
     handleArticleClick,
-  } = useHomeRouteHook(photos, likeDataModal, onTopicSelect, clickForModal);
+  } = useHomeRouteHook(props.photos, props.likeDataModal, props.onTopicSelect, props.clickForModal);
 
   return (
     <div className="home-route">
-      <TopNavigation topics={topics} isLiked={isLiked} onTopicSelect={handleTopicSelection} />
-      <PhotoList photos={photos} likeStatus={likeData} onClick={handleArticleClick} />
+      <TopNavigation topics={props.topics} isLiked={isLiked} onTopicSelect={handleTopicSelection} />
+      <PhotoList photos={props.photos} likeStatus={likeData} onClick={handleArticleClick} />
     </div>
   );
 };

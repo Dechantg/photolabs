@@ -6,12 +6,14 @@ import "../styles/PhotoList.scss";
 import PhotoFavButton from 'components/PhotoFavButton';
 import PhotoList from 'components/PhotoList';
 
-const PhotoDetailsModal = ({ photos, modalData, onModalClose, onLikeStatusChange }) => {
+// { photos, modalData, onModalClose, onLikeStatusChange }
+
+const PhotoDetailsModal = (props) => {
 
   // pull similar photos from modalData id
-  const similarPhotos = photos.find(item => item.id === modalData.id)?.similar_photos;
+  const similarPhotos = props.photos.find(item => item.id === props.modalData.id)?.similar_photos;
   // filter out the modalData id from the list of similar photos to prevent repitition
-  const filteredSimilarPhotos = (similarPhotos || []).filter(filteredPhoto => filteredPhoto.id !== modalData.id).map(filteredPhoto => ({
+  const filteredSimilarPhotos = (similarPhotos || []).filter(filteredPhoto => filteredPhoto.id !== props.modalData.id).map(filteredPhoto => ({
     id: filteredPhoto.id,
     location: filteredPhoto.location,
     urls: filteredPhoto.urls,
@@ -24,14 +26,14 @@ const PhotoDetailsModal = ({ photos, modalData, onModalClose, onLikeStatusChange
 
     // Pass the id back to the parent component
     if (id) {
-      onLikeStatusChange(id, isLiked);
+      props.onLikeStatusChange(id, isLiked);
     }
   };
 
   return (
     <div className="photo-details-modal">
       <span className='photo-details-modal__top-bar'>
-        <button className="photo-details-modal__close-button" onClick={onModalClose} selected={close}>
+        <button className="photo-details-modal__close-button" onClick={props.onModalClose} selected={close}>
           <img src={closeSymbol} alt="close symbol" />
         </button>
       </span>
@@ -41,25 +43,25 @@ const PhotoDetailsModal = ({ photos, modalData, onModalClose, onLikeStatusChange
         <article className='photo-details-modal__article'>
           <div className="photo-details-modal__photo-container">
             <PhotoFavButton
-              itemId={modalData.id}
+              itemId={props.modalData.id}
               onLikeStatusChange={handleLikeStatusChange}
             />
             <img
-              src={modalData.urls.full}
+              src={props.modalData.urls.full}
               alt="User's Image"
               className="photo-details-modal__image"
             />
           </div>
           <p>
             <img
-              src={modalData.user.profile}
+              src={props.modalData.user.profile}
               alt="User's Image"
               className="photo-details-modal__photographer-profile"
             />
           </p>
-          <p className="photo-list__username">{modalData.user.name}</p>
+          <p className="photo-list__username">{props.modalData.user.name}</p>
           <p className="photo-list__user-location">
-            {modalData.location.city}, {modalData.location.country}
+            {props.modalData.location.city}, {props.modalData.location.country}
           </p>
         </article>
         <div>
