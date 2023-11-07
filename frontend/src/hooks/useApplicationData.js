@@ -71,8 +71,8 @@ const useApplicationData = function(selectedTopicId, isLikedIcon) {
 
   useEffect(() => {
     const photosURL = state.selectedTopicId
-      ? `http://localhost:8001/api/topics/photos/${state.selectedTopicId}`
-      : 'http://localhost:8001/api/photos';
+      ? `${process.env.REACT_APP_API_BASE_URL}/api/topics/photos/${state.selectedTopicId}`
+      : `${process.env.REACT_APP_API_BASE_URL}/api/photos`;
   
     fetch(photosURL)
       .then((response) => response.json())
