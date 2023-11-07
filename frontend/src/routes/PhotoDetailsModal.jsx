@@ -8,9 +8,9 @@ import PhotoList from 'components/PhotoList';
 
 const PhotoDetailsModal = ({ photos, modalData, onModalClose, onLikeStatusChange }) => {
 
-
+  // pull similar photos from modalData id
   const similarPhotos = photos.find(item => item.id === modalData.id)?.similar_photos;
-  
+  // filter out the modalData id from the list of similar photos to prevent repitition
   const filteredSimilarPhotos = (similarPhotos || []).filter(filteredPhoto => filteredPhoto.id !== modalData.id).map(filteredPhoto => ({
     id: filteredPhoto.id,
     location: filteredPhoto.location,

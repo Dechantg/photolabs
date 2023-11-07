@@ -5,6 +5,7 @@ import useHomeRouteHook from '../hooks/homeRouteHook';
 
 import '../styles/HomeRoute.scss';
 
+
 const HomeRoute = ({ photos, topics, clickForModal, likeDataModal, onTopicSelect }) => {
   const {
     isLiked,

@@ -3,13 +3,10 @@ import useApplicationData from 'hooks/useApplicationData';
 import HomeRoute from 'routes/HomeRoute';
 import PhotoDetailsModal from 'routes/PhotoDetailsModal';
 
-const Log = ({ data }) => {
-  return null;
-};
 
 
 const App = () => {
-
+  //pass data from routes into hook for processing
   const {
     modalData,
     isModalOpen,
@@ -27,7 +24,7 @@ const App = () => {
 
 
 
-
+  // set react paths and pass variables in and out
   return (
     <div>
       <HomeRoute

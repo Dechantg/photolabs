@@ -3,6 +3,7 @@ import FavIcon from './FavIcon';
 
 import '../styles/FavBadge.scss';
 
+// pass favIcon
 const FavBadge = ({ liked }) => {
   return (
     <div className="fav-badge">

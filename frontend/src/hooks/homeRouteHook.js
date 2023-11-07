@@ -26,7 +26,6 @@ const useHomeRouteHook = (photos, likeDataModal, onTopicSelect, clickForModal) =
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const handleTopicSelection = (topicData) => {
-    // Do something with the selected topic data
     onTopicSelect(topicData);
   };
 
