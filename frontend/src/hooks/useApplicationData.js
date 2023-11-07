@@ -47,7 +47,7 @@ const useApplicationData = function(selectedTopicId, isLikedIcon) {
   };
 
   const toggleClose = () => {
-    dispatch({ type: 'TOGGLE_CLOSE' }); // Dispatch the new action to toggle close state
+    dispatch({ type: 'TOGGLE_CLOSE' });
   };
 
   const closeModal = () => {

@@ -11,9 +11,9 @@ const PhotoFavButton = (props) => {
     const updatedIsLiked = !isLiked;
   
     if (!updatedIsLiked) {
-      console.log("Button state changed from normal to liked");
+      console.log("Button state changed to liked", updatedIsLiked);
     } else {
-      console.log("Button state changed from liked to normal");
+      console.log("Button state changed to liked", updatedIsLiked);
     }
   
     setIsLiked(updatedIsLiked);

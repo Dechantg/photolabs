@@ -34,10 +34,19 @@ const useHomeRouteHook = (photos, likeDataModal, onTopicSelect, clickForModal) =
   };
 
   useEffect(() => {
-    const isLiked = Object.values(state.likeResults).some((liked) => liked === true);
+    // Filter out keys with true boolean values
+    const filteredLikeResults = Object.keys(state.likeResults)
+      .filter((key) => state.likeResults[key] === true)
+      .reduce((filtered, key) => {
+        filtered[key] = state.likeResults[key];
+        return filtered;
+      }, {});
+
+    const isLiked = Object.values(filteredLikeResults).length > 0;
     dispatch({ type: 'SET_IS_LIKED', payload: isLiked });
   }, [state.likeResults]);
 
+  
   useEffect(() => {
     if (likeDataModal) {
       let processedData;
@@ -62,6 +71,7 @@ const useHomeRouteHook = (photos, likeDataModal, onTopicSelect, clickForModal) =
     likeData: (data) => dispatch({ type: 'SET_LIKE_DATA', payload: data }),
     handleTopicSelection,
     handleArticleClick,
+    likeResults: state.likeResults,
   };
 };
 
