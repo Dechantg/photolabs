@@ -1,11 +1,10 @@
 import React from 'react';
 import useApplicationData from 'hooks/useApplicationData';
-// import photos from "mocks/photos";
 import HomeRoute from 'routes/HomeRoute';
 import PhotoDetailsModal from 'routes/PhotoDetailsModal';
 
 const Log = ({ data }) => {
-  return null; // Render nothing (null) in the actual DOM
+  return null;
 };
 
 

@@ -5,7 +5,7 @@ import '../styles/FavBadge.scss';
 const FavIcon = ({ displayAlert, displayDot, selected, onClick }) => {
   const handleIconClick = () => {
     if (onClick) {
-      onClick(); // Call the provided onClick handler
+      onClick();
     }
   };
 
