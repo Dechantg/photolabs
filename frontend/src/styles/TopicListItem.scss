@@ -8,9 +8,12 @@
   text-decoration: none;
   font-weight: 500;
   color: #2b2b2b;
+  transition: box-shadow 0.2s;
 
   &:hover {
     text-decoration: overline;
     color: #111;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
   }
 }
+

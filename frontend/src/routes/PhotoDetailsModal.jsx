@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import '../styles/PhotoDetailsModal.scss';
 import closeSymbol from '../assets/closeSymbol.svg';
@@ -7,18 +7,9 @@ import PhotoFavButton from 'components/PhotoFavButton';
 import PhotoList from 'components/PhotoList';
 
 const PhotoDetailsModal = ({ photos, modalData, onModalClose, onLikeStatusChange }) => {
-  const [close, setClosed] = useState(false);
 
-  const handleClick = () => {
-    setClosed(!close);
-    onModalClose(!close);
-
-  };
-
-  console.log(photos);
 
   const similarPhotos = photos.find(item => item.id === modalData.id)?.similar_photos;
-  console.log('Similar Photos:', similarPhotos);
   
   const filteredSimilarPhotos = (similarPhotos || []).filter(filteredPhoto => filteredPhoto.id !== modalData.id).map(filteredPhoto => ({
     id: filteredPhoto.id,
@@ -27,16 +18,9 @@ const PhotoDetailsModal = ({ photos, modalData, onModalClose, onLikeStatusChange
     user: filteredPhoto.user,
   }));
 
-  console.log('Filtered Similar Photos:', filteredSimilarPhotos);
-
-
-  console.log("here is the clicky click from modal data", modalData);
-
-
 
   const handleLikeStatusChange = (itemId, isLiked) => {
     const id = itemId.id || itemId;
-    console.log('Item ID before calling handleLikeStatusChange:', id);
 
     // Pass the id back to the parent component
     if (id) {
@@ -47,7 +31,7 @@ const PhotoDetailsModal = ({ photos, modalData, onModalClose, onLikeStatusChange
   return (
     <div className="photo-details-modal">
       <span className='photo-details-modal__top-bar'>
-        <button className="photo-details-modal__close-button" onClick={handleClick} selected={close}>
+        <button className="photo-details-modal__close-button" onClick={onModalClose} selected={close}>
           <img src={closeSymbol} alt="close symbol" />
         </button>
       </span>

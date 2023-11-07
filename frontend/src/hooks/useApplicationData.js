@@ -7,6 +7,7 @@ const initialState = {
   photos: [],
   topics: [],
   selectedTopicId: null,
+  close: false,
 };
 
 const reducer = (state, action) => {
@@ -27,18 +28,26 @@ const reducer = (state, action) => {
     return { ...state, topics: action.payload };
   case 'SET_SELECTED_TOPIC_ID':
     return { ...state, selectedTopicId: action.payload };
-    
+  case 'TOGGLE_CLOSE':
+    return { ...state, close: !state.close };
+  case 'SET_LIKED_ICON':
+    return { ...state, isLikedIcon: action.payload };
+
   default:
     return state;
   }
 };
 
-const useApplicationData = function(selectedTopicId) {
+const useApplicationData = function(selectedTopicId, isLikedIcon) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const modalClick = (data) => {
     dispatch({ type: 'SET_MODAL_DATA', payload: data });
     dispatch({ type: 'OPEN_MODAL' });
+  };
+
+  const toggleClose = () => {
+    dispatch({ type: 'TOGGLE_CLOSE' }); // Dispatch the new action to toggle close state
   };
 
   const closeModal = () => {
@@ -47,23 +56,28 @@ const useApplicationData = function(selectedTopicId) {
 
   const handleLikeStatusChange = (itemId, isLiked) => {
     dispatch({ type: 'SET_LIKE_DATA', payload: { itemId, isLiked } });
+    dispatch({ type: 'SET_LIKED_ICON', payload: isLiked });
   };
 
   const handleTopicSelect = (selectedTopic) => {
     dispatch({ type: 'SET_SELECTED_TOPIC_ID', payload: selectedTopic.id });
-    console.log("Topic selected in App:", selectedTopic);
+  };
+
+  
+
+  const handleUpdateLikeResults = (results) => {
+    dispatch({ type: 'UPDATE_LIKE_RESULTS', payload: results });
   };
 
   useEffect(() => {
     const photosURL = state.selectedTopicId
       ? `http://localhost:8001/api/topics/photos/${state.selectedTopicId}`
       : 'http://localhost:8001/api/photos';
-
+  
     fetch(photosURL)
       .then((response) => response.json())
       .then((data) => {
         dispatch({ type: 'SET_PHOTOS', payload: data });
-        console.log("Fetched photos data:", data);
       })
       .catch((error) => {
         console.error("Error fetching photos:", error);
@@ -92,6 +106,9 @@ const useApplicationData = function(selectedTopicId) {
     closeModal,
     handleLikeStatusChange,
     handleTopicSelect,
+    handleUpdateLikeResults,
+    toggleClose,
+    isLikedIcon,
   };
 };
 
