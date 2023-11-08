@@ -14,7 +14,7 @@ const App = () => {
     modalClick,
     closeModal,
     handleLikeStatusChange,
-    handleTopicSelect,
+    handleTopicSelect,4
     handleFavIconClick,
     isLikedIcon,
     photos,
