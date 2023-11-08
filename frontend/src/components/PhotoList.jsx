@@ -11,7 +11,7 @@ const PhotoList = (props) => {
   
   const handleLikeStatusChange = (itemId, isLiked) => {
     const likeStatusData = { itemId, isLiked };
-    console.log("likestatusdata from inside the photolist", likeStatusData);
+    // console.log("likestatusdata from inside the photolist", likeStatusData);
     props.likeStatus(likeStatusData);
   };
 

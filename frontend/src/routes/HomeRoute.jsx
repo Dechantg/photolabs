@@ -19,13 +19,13 @@ const HomeRoute = (props) => {
   const [favIconClicked, setFavIconClicked] = useState(false);
 
 
-  console.log("is liked from homeroute", isLiked);
-  console.log("likeresults from inside the homeroute but i am serious", likeResults);
+  // console.log("is liked from homeroute", isLiked);
+  // console.log("likeresults from insiede the homeroute but i am serious", likeResults);
   // console.log("like status/data from home route", likeData);
 
   const handleFavIconClick = () => {
-    console.log("FavIcon button was clicked");
-    console.log("photos object", props.photos);
+    // console.log("FavIcon button was clicked");
+    // console.log("photos object", props.photos);
     setFavIconClicked(!favIconClicked);
   };
 

@@ -10,7 +10,7 @@ import FavIcon from './FavIcon';
 const TopNavigation = (props) => {
 
 
-  console.log("the in topnav liked check", props.isLiked);
+  // console.log("the in topnav liked check", props.isLiked);
 
  
   return (
