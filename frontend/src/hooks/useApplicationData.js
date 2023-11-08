@@ -86,7 +86,7 @@ const useApplicationData = function(selectedTopicId, isLikedIcon) {
 
 
   useEffect(() => {
-    fetch('http://localhost:8001/api/topics')
+    fetch('${process.env.REACT_APP_API_BASE_URL}/api/topics')
       .then((response) => response.json())
       .then((data) => {
         dispatch({ type: 'SET_TOPICS', payload: data });

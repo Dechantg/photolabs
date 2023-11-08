@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PhotoList from '../components/PhotoList';
 import TopNavigation from '../components/TopNavigationBar';
-import useHomeRouteHook from '../hooks/homeRouteHook';
+import useHomeRouteHook from '../hooks/useHomeRouteHook';
 
 import '../styles/HomeRoute.scss';
 
