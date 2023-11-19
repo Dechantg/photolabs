@@ -1,45 +1,57 @@
-import React from 'react';
-import useApplicationData from 'hooks/useApplicationData';
+import React from "react";
 import HomeRoute from 'routes/HomeRoute';
 import PhotoDetailsModal from 'routes/PhotoDetailsModal';
-
-
+import useApplicationData from 'hooks/useApplicationData';
 
 const App = () => {
-  //pass data from routes into hook for processing
+
   const {
     modalData,
     isModalOpen,
-    likeDataModal,
     modalClick,
     closeModal,
     handleLikeStatusChange,
     handleTopicSelect,
-    handleFavIconClick,
     isLikedIcon,
+    favIconStatus,
     photos,
     topics,
-    handleUpdateLikeResults,
+    likeStatusStorage,
   } = useApplicationData();
+  
 
+ 
 
+  const handleArticleClick = (data) => {
+    // Handle article click
+    modalClick(data);
+  };
 
-  // set react paths and pass variables in and out
+ 
+
   return (
     <div>
       <HomeRoute
         photos={photos}
         topics={topics}
-        clickForModal={modalClick}
-        likeDataModal={likeDataModal}
         onTopicSelect={handleTopicSelect}
-        onFavIconClick={handleFavIconClick}
-        onUpdateLikeResults={handleUpdateLikeResults}
         isLikedIcon={isLikedIcon}
+        handleArticleClick={handleArticleClick}
+        likeStatus={handleLikeStatusChange}
+        likeStatusStorage={likeStatusStorage}
+        favIconStatus={favIconStatus}
       />
 
+      {isModalOpen && (
+        <PhotoDetailsModal
+          photos={photos}
+          modalData={modalData}
+          onModalClose={closeModal}
+          likeStatus={handleLikeStatusChange}
+          likeStatusStorage={likeStatusStorage}
 
-      {isModalOpen && <PhotoDetailsModal photos={photos} modalData={modalData} onModalClose={closeModal} onLikeStatusChange={handleLikeStatusChange}/>}
+        />
+      )}
     </div>
   );
 };

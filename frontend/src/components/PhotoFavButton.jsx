@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-
 import FavIcon from './FavIcon';
 import '../styles/PhotoFavButton.scss';
-
 
 const PhotoFavButton = (props) => {
   const [isLiked, setIsLiked] = useState(false);
@@ -10,20 +8,17 @@ const PhotoFavButton = (props) => {
   const handleClick = () => {
     const updatedIsLiked = !isLiked;
   
-    if (!updatedIsLiked) {
-      console.log("Button state changed to liked", updatedIsLiked);
-    } else {
-      console.log("Button state changed to liked", updatedIsLiked);
-    }
-  
+      
     setIsLiked(updatedIsLiked);
-    props.onLikeStatusChange(props.itemId, updatedIsLiked);
+    props.likeStatus(props.itemId, updatedIsLiked);
   };
 
   return (
-    <div className="photo-list__fav-icon">
+    <div className="photo-list__fav-icon" onClick={handleClick}>
       <div className="photo-list__fav-icon-svg">
-        <FavIcon button onClick={handleClick} selected={isLiked} />
+        <FavIcon buttonVersion={props.buttonVersion}
+          likeStatus={props.likeStatus}
+        />
       </div>
     </div>
   );

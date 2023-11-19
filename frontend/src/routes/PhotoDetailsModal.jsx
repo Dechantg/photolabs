@@ -1,18 +1,21 @@
 import React from 'react';
-
 import '../styles/PhotoDetailsModal.scss';
 import closeSymbol from '../assets/closeSymbol.svg';
 import "../styles/PhotoList.scss";
 import PhotoFavButton from 'components/PhotoFavButton';
 import PhotoList from 'components/PhotoList';
 
-// { photos, modalData, onModalClose, onLikeStatusChange }
-
 const PhotoDetailsModal = (props) => {
 
-  // pull similar photos from modalData id
+  const modalPhotoData = props.photos.find(photo => photo.id === props.modalData.id);
+
+  if (!modalPhotoData) {
+    return null;
+  }
+
+
+
   const similarPhotos = props.photos.find(item => item.id === props.modalData.id)?.similar_photos;
-  // filter out the modalData id from the list of similar photos to prevent repitition
   const filteredSimilarPhotos = (similarPhotos || []).filter(filteredPhoto => filteredPhoto.id !== props.modalData.id).map(filteredPhoto => ({
     id: filteredPhoto.id,
     location: filteredPhoto.location,
@@ -21,62 +24,60 @@ const PhotoDetailsModal = (props) => {
   }));
 
 
-  const handleLikeStatusChange = (itemId, isLiked) => {
-    const id = itemId.id || itemId;
-
-    // Pass the id back to the parent component
-    if (id) {
-      props.onLikeStatusChange(id, isLiked);
-    }
-  };
+  
+  const isLiked = props.likeStatusStorage.some(item => item.itemId === props.modalData.id);
+  const buttonVersion = isLiked ? 'liked' : 'normal';
 
   return (
     <div className="photo-details-modal">
       <span className='photo-details-modal__top-bar'>
-        <button className="photo-details-modal__close-button" onClick={props.onModalClose} selected={close}>
+        <button className="photo-details-modal__close-button" onClick={props.onModalClose} >
           <img src={closeSymbol} alt="close symbol" />
         </button>
       </span>
-      <span >
-
-
+      <span>
         <article className='photo-details-modal__article'>
           <div className="photo-details-modal__photo-container">
             <PhotoFavButton
               itemId={props.modalData.id}
-              onLikeStatusChange={handleLikeStatusChange}
+              likeStatus={props.likeStatus}
+              buttonVersion={buttonVersion}
             />
             <img
-              src={props.modalData.urls.full}
+              src={modalPhotoData.urls.full}
               alt="User's Image"
               className="photo-details-modal__image"
             />
           </div>
-          <p>
-            <img
-              src={props.modalData.user.profile}
-              alt="User's Image"
-              className="photo-details-modal__photographer-profile"
-            />
-          </p>
-          <p className="photo-list__username">{props.modalData.user.name}</p>
-          <p className="photo-list__user-location">
-            {props.modalData.location.city}, {props.modalData.location.country}
-          </p>
+          <div>
+            <p>
+              <img
+                src={modalPhotoData.user.profile}
+                alt="User's Image"
+                className="photo-details-modal__photographer-profile"
+              />
+            </p>
+            <span>
+              <p className="photo-list__username">{modalPhotoData.user.name}</p>
+              <p className="photo-list__user-location">
+                {modalPhotoData.location.city}, {modalPhotoData.location.country}
+              </p>
+            </span>
+          </div>
         </article>
         <div>
-          <span >
+          <span>
             <li className='photo-details-modal__images'>
               Similar Photos:
-
-
-              <PhotoList photos={filteredSimilarPhotos} likeStatus={handleLikeStatusChange} />
+              <PhotoList
+                photos={filteredSimilarPhotos}
+                likeStatus={props.likeStatus}
+                likeStatusStorage={props.likeStatusStorage}
+              />
             </li>
           </span>
         </div>
-
       </span>
-
     </div>
   );
 };

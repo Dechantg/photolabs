@@ -1,57 +1,45 @@
 import React, { useState } from 'react';
 import PhotoList from '../components/PhotoList';
 import TopNavigation from '../components/TopNavigationBar';
-import useHomeRouteHook from '../hooks/useHomeRouteHook';
 
 import '../styles/HomeRoute.scss';
 
-//{ photos, topics, clickForModal, likeDataModal, onTopicSelect }
-
 const HomeRoute = (props) => {
-  const {
-    isLiked,
-    likeData,
-    handleTopicSelection,
-    handleArticleClick,
-    likeResults,
-  } = useHomeRouteHook(props.photos, props.likeDataModal, props.onTopicSelect, props.clickForModal);
+
 
   const [favIconClicked, setFavIconClicked] = useState(false);
 
 
-  // console.log("is liked from homeroute", isLiked);
-  // console.log("likeresults from insiede the homeroute but i am serious", likeResults);
-  // console.log("like status/data from home route", likeData);
-
   const handleFavIconClick = () => {
-    // console.log("FavIcon button was clicked");
-    // console.log("photos object", props.photos);
     setFavIconClicked(!favIconClicked);
   };
+ 
 
-  const filteredPhotos = favIconClicked ? props.photos.filter((photo) => photo.id in likeResults) : props.photos;
+  const filteredPhotos = favIconClicked
+    ? props.photos.filter((photo) => props.likeStatusStorage.some((item) => item.itemId === photo.id))
+    : props.photos;
+
+
 
 
   return (
     <div className="home-route">
       <TopNavigation
         topics={props.topics}
-        isLiked={isLiked}
-        onTopicSelect={handleTopicSelection}
+        isLikedIcon={props.isLikedIcon}
+        onTopicSelect={props.onTopicSelect}
         onFavIconClick={handleFavIconClick}
+        favIconStatus={props.favIconStatus}
       />
 
       <PhotoList
         photos={filteredPhotos}
-        likeStatus={likeData}
-        onClick={handleArticleClick}
+        likeStatus={props.likeStatus}
+        onClick={props.handleArticleClick}
+        likeStatusStorage={props.likeStatusStorage}
       />
     </div>
   );
 };
 
 export default HomeRoute;
-
-
-
-

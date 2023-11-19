@@ -2,24 +2,47 @@ import { useReducer, useEffect } from 'react';
 
 const initialState = {
   modalData: null,
+  isLikedIcon: undefined,
   isModalOpen: false,
-  likeDataModal: null,
   photos: [],
   topics: [],
   selectedTopicId: null,
   close: false,
+  likedItems: [],
+  likeStatusStorage: [],
+  favIconStatus: false,
+  favIconClick: false
 };
 
 const reducer = (state, action) => {
+  
   switch (action.type) {
   case 'SET_MODAL_DATA':
     return { ...state, modalData: action.payload };
+  case 'TOGGLE_FAV_ICON_CLICK':
+    return { ...state, favIconClick: !state.favIconClick };
+  case 'SET_FAV_ICON_STATUS':
+    return { ...state, favIconStatus: action.payload };
   case 'OPEN_MODAL':
     return { ...state, isModalOpen: true };
   case 'CLOSE_MODAL':
     return { ...state, isModalOpen: false };
-  case 'SET_LIKE_DATA':
-    return { ...state, likeDataModal: action.payload };
+  case 'SET_PHOTO_FAV_BUTTON_LIKED':
+    return { ...state, isLiked: action.payload };
+  case 'SET_LIKE_DATA': {
+    const { itemId, isLiked } = action.payload;
+
+    
+    const updatedLikedItems = isLiked
+      ? [...state.likedItems, itemId]
+      : state.likedItems.filter((id) => id !== itemId);
+
+    return {
+      ...state,
+      likedItems: updatedLikedItems,
+      likeStatusStorage: [...state.likeStatusStorage, { itemId, isLiked }],
+    };
+  }
   case 'SET_PHOTOS':
     return { ...state, photos: action.payload };
   case 'SET_TOPICS':
@@ -32,14 +55,13 @@ const reducer = (state, action) => {
     return { ...state, close: !state.close };
   case 'SET_LIKED_ICON':
     return { ...state, isLikedIcon: action.payload };
-
   default:
     return state;
   }
 };
-
 const useApplicationData = function(selectedTopicId, isLikedIcon) {
   const [state, dispatch] = useReducer(reducer, initialState);
+
 
   const modalClick = (data) => {
     dispatch({ type: 'SET_MODAL_DATA', payload: data });
@@ -55,8 +77,30 @@ const useApplicationData = function(selectedTopicId, isLikedIcon) {
   };
 
   const handleLikeStatusChange = (itemId, isLiked) => {
+    console.log('handleLikeStatusChange called with itemId:', itemId, 'isLiked:', isLiked);
+
+    const updatedLikedItems = isLiked
+      ? [...state.likedItems, itemId]
+      : state.likedItems.filter((id) => id !== itemId);
+
+
     dispatch({ type: 'SET_LIKE_DATA', payload: { itemId, isLiked } });
     dispatch({ type: 'SET_LIKED_ICON', payload: isLiked });
+    dispatch({ type: 'SET_FAV_ICON_STATUS', payload: isLiked });
+
+  };
+
+  const handlePhotoFavButtonClick = (itemId) => {
+    const updatedIsLiked = !state.isLiked;
+
+    
+    dispatch({ type: 'SET_PHOTO_FAV_BUTTON_LIKED', payload: updatedIsLiked });
+    handleLikeStatusChange(itemId, updatedIsLiked);
+  };
+
+
+  const handleFavIconClick = () => {
+    dispatch({ type: 'SET_FAV_ICON_CLICKED', payload: !state.favIconClicked });
   };
 
   const handleTopicSelect = (selectedTopic) => {
@@ -71,8 +115,8 @@ const useApplicationData = function(selectedTopicId, isLikedIcon) {
 
   useEffect(() => {
     const photosURL = state.selectedTopicId
-      ? `${process.env.REACT_APP_API_BASE_URL}/api/topics/photos/${state.selectedTopicId}`
-      : `${process.env.REACT_APP_API_BASE_URL}/api/photos`;
+      ? `/api/topics/photos/${state.selectedTopicId}`
+      : `/api/photos`;
   
     fetch(photosURL)
       .then((response) => response.json())
@@ -86,11 +130,10 @@ const useApplicationData = function(selectedTopicId, isLikedIcon) {
 
 
   useEffect(() => {
-    fetch('${process.env.REACT_APP_API_BASE_URL}/api/topics')
+    fetch('/api/topics')
       .then((response) => response.json())
       .then((data) => {
         dispatch({ type: 'SET_TOPICS', payload: data });
-        console.log("Fetched topics data:", data);
       })
       .catch((error) => {
         console.error("Error fetching topics data:", error);
@@ -108,7 +151,13 @@ const useApplicationData = function(selectedTopicId, isLikedIcon) {
     handleTopicSelect,
     handleUpdateLikeResults,
     toggleClose,
+    handlePhotoFavButtonClick,
     isLikedIcon,
+    likeStatusStorage: state.likedItems.map(itemId => ({
+      itemId,
+      isLiked: true,
+    })),
+    favIconStatus: state.favIconStatus,
   };
 };
 
