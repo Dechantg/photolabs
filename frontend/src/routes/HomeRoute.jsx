@@ -30,6 +30,7 @@ const HomeRoute = (props) => {
         onTopicSelect={props.onTopicSelect}
         onFavIconClick={handleFavIconClick}
         favIconStatus={props.favIconStatus}
+        handleLogoClick={props.handleLogoClick}
       />
 
       <PhotoList

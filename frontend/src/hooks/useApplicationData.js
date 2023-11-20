@@ -55,6 +55,11 @@ const reducer = (state, action) => {
     return { ...state, close: !state.close };
   case 'SET_LIKED_ICON':
     return { ...state, isLikedIcon: action.payload };
+  case 'REMOVE_TOPIC_FILTER':
+    return {
+      ...state,
+      selectedTopicId: null,
+    };
   default:
     return state;
   }
@@ -88,6 +93,11 @@ const useApplicationData = function(selectedTopicId, isLikedIcon) {
     dispatch({ type: 'SET_LIKED_ICON', payload: isLiked });
     dispatch({ type: 'SET_FAV_ICON_STATUS', payload: isLiked });
 
+  };
+
+  const handleLogoClick = () => {
+    // Add a new action to the dispatch to remove the topic filter
+    dispatch({ type: 'REMOVE_TOPIC_FILTER' });
   };
 
   const handlePhotoFavButtonClick = (itemId) => {
@@ -152,6 +162,7 @@ const useApplicationData = function(selectedTopicId, isLikedIcon) {
     handleUpdateLikeResults,
     toggleClose,
     handlePhotoFavButtonClick,
+    handleLogoClick,
     isLikedIcon,
     likeStatusStorage: state.likedItems.map(itemId => ({
       itemId,

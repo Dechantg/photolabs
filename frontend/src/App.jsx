@@ -17,6 +17,7 @@ const App = () => {
     photos,
     topics,
     likeStatusStorage,
+    handleLogoClick,
   } = useApplicationData();
   
 
@@ -40,6 +41,7 @@ const App = () => {
         likeStatus={handleLikeStatusChange}
         likeStatusStorage={likeStatusStorage}
         favIconStatus={favIconStatus}
+        handleLogoClick={handleLogoClick}
       />
 
       {isModalOpen && (
